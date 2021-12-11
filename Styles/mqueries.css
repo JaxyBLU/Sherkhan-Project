@@ -1,0 +1,29 @@
+@media (max-width: 1000px){
+	main{
+		width: 100%;
+	}
+}
+
+@media (max-width: 770px){
+	header{
+		height: auto;
+		flex-direction: column;
+	}
+
+	header nav{
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 0.5rem;
+	}
+}
+
+@media (max-width: 579px){
+	header nav{
+		grid-template-columns: 1fr 1fr;
+	}
+
+	header nav a{
+		text-align: center;
+		display: block;
+	}
+}
