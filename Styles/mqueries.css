@@ -15,15 +15,14 @@
 		grid-template-columns: repeat(4, 1fr);
 		gap: 0.5rem;
 	}
+
+	.about_main{
+		grid-template-columns: 1fr;
+	}
 }
 
 @media (max-width: 579px){
 	header nav{
 		grid-template-columns: 1fr 1fr;
-	}
-
-	header nav a{
-		text-align: center;
-		display: block;
 	}
 }
