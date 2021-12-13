@@ -19,10 +19,27 @@
 	.about_main{
 		grid-template-columns: 1fr;
 	}
+
+	footer{
+		grid-template-columns: 1fr;
+	}
 }
 
 @media (max-width: 579px){
 	header nav{
 		grid-template-columns: 1fr 1fr;
+	}
+
+	.about_main{
+		padding: 3rem 1rem;
+	}
+
+	.about_text #thisisme,
+	.about_text h1{
+		text-align: center;
+	}
+
+	.about_text #introhero{
+		text-align: justify;
 	}
 }
