@@ -157,6 +157,44 @@ footer > *{
 
 /*==================================================================  Projets.html Page Design  ==============================================*/
 .container{
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	gap: 2rem;
 	min-height: 70vh;
 	padding: 3rem;
+}
+
+.menu{
+	padding: 1rem;
+	border: 2px solid black;
+}
+
+.menu h3{
+	text-align: center;
+	padding: 0.5rem;
+	border: 1px solid black;
+	background-color: orchid;
+}
+
+#methodselect{
+	display: none;
+	z-index: 1;
+	border: 1px solid black;
+}
+
+.menu h3:hover #methodselect{
+	display: inline-block;
+}
+
+#methodselect button{
+	width: 100%;
+	padding: 0.5rem;
+	display: block;
+	border: none;
+	border-bottom: 1px solid black;
+}
+
+.calculator{
+	padding: 1rem;
+	border: 2px solid black;
 }
