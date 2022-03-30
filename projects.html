@@ -28,15 +28,20 @@
 	<section class="container">
 		<div class="menu">
 			<h3>Select The Method</h3>
-			<button id="jordan">Gauss Jordan Method</button>
-			<button id="seidel">Gauss Seidel Method</button>
-			<button id="jacobi">Gauss Jacobi Method</button>
-			<textarea name="equation" id="" cols="30" rows="10"></textarea>
-			<button id="solve">Find Solution</button>
+			<select name="methods" id="methods">
+				<option value="gauss-jordan">Gauss Jordan Method</option>
+				<option value="gauss-seidel">Gauss Seidel Method</option>
+				<option value="gauss-jacobi">Gauss Jacobi Method</option>
+			</select>
+			<h3>Size of the Matrix</h3>
+			<input type="number" max="5" min="1" id="matrix-height">
+			<span>X</span>
+			<input type="number" max="5" min="1" id="matrix-width">
+			<button id="create-matrix">Create Matrix</button>
+			<h3>Matrix</h3>
 		</div>
 		<div class="solution">
 			<textarea name="board" id="board" cols="30" rows="10"></textarea>
-		</div>
 		</div>
 	</section>
 
