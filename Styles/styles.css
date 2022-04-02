@@ -203,14 +203,23 @@ footer > * {
   margin-left: 1rem;
 }
 
-#solve {
+#create-matrix {
   display: block;
-  margin: 0.5rem auto;
+  padding: 0.5rem;
+  margin: 0px auto;
 }
 
 .solution {
   padding: 1rem;
   border: 2px solid black;
+}
+
+#matrix-mother {
+  padding: 0.5rem;
+  background-color: white;
+  min-height: 50px;
+  min-width: 50px;
+  border: 1px solid black;
 }
 
 #board {
