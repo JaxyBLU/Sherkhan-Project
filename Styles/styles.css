@@ -201,6 +201,7 @@ footer > * {
   margin-bottom: 0.5rem;
   margin-right: 1rem;
   margin-left: 1rem;
+  width: 4rem;
 }
 
 #create-matrix,
@@ -216,6 +217,7 @@ footer > * {
 }
 
 #matrix-mother {
+  display: grid;
   padding: 0.5rem;
   background-color: white;
   min-height: 50px;
@@ -229,11 +231,6 @@ footer > * {
   width: 50px;
   margin-bottom: 0.5rem;
   margin-right: 0.5rem;
-}
-
-.first-child {
-  display: flex;
-  justify-content: center;
 }
 
 #board {
