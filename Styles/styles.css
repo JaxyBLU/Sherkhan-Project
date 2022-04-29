@@ -226,7 +226,24 @@ footer > * {
   margin-bottom: 1rem;
 }
 
-.matrix-input {
+.minimother{
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 10px;
+}
+
+#son{
+  margin-bottom: 1rem;
+  min-height: 50px;
+  min-width: 40px;
+  background-color: white;
+  border: 1px solid black;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.matrix-input,
+.matrixbinput{
   font-size: 20px;
   width: 50px;
   margin-bottom: 0.5rem;
