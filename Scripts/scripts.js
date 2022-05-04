@@ -13,7 +13,10 @@ solutionButton.addEventListener('click', makeInputsReady);
 /* Function for creating the matrix with the width and height values entered by the user */
 function createMatrix() {
     motherofmatrix.innerHTML = ''; /* Need to make sure that previous values are cleared for the parent div */
+    sonelement.innerHTML = ''; /* Also parent element of matrix B */
+    
     motherofmatrix.style.gridTemplateColumns = `repeat(${matwidth.value}, 1fr)`;
+    motherofmatrix.style.gap = '0.5rem';
 
     for (let i = 0; i < matheight.value; i++) { /* Loop that many times as the height of matrix */
         for (let j = 0; j < matwidth.value; j++) { /* Loop as many times as the width of matrix */
@@ -29,6 +32,7 @@ function createMatrix() {
 
         let matrixbinput = document.createElement('input');
         matrixbinput.type = 'number';
+        matrixbinput.style.marginBottom = '0.5rem';
         matrixbinput.value = 0;
         matrixbinput.className = 'matrixbinput';
         matrixbinput.id = `matb${i}`;
@@ -59,7 +63,7 @@ function makeInputsReady() {
         case 'gauss-seidel':
             for(let h=0; h<25; h++){
                 matrixX = GaussSeidel(matrixA, matrixB, matrixX);
-                console.log('res: ', matrixX);
+                /*console.log('res: ', matrixX);*/
             }
             break;
         case 'gauss-jacobi':
@@ -69,6 +73,7 @@ function makeInputsReady() {
 }
 
 function GaussSeidel(matrixAnow, matrixBnow, matrixXnow) {
+    let aa = matrixAnow.length;
     for (let a = 0; a < matheight.value; a++) {
         let d = matrixBnow[a];
         for (let b = 0; b < matheight.value; b++) {
@@ -79,6 +84,6 @@ function GaussSeidel(matrixAnow, matrixBnow, matrixXnow) {
         matrixXnow[a] = d/matrixAnow[a][a];
     }
 
-    console.log('matrixXnow: ', matrixXnow);
+    console.log(matrixXnow);
     return matrixXnow;
 }
