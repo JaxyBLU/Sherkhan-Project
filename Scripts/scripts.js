@@ -4,7 +4,8 @@ const motherofmatrix = document.getElementById('matrix-mother'); /* parent div e
 const createMatrixButton = document.getElementById('create-matrix'); /* button used for creating the matrix */
 const solutionButton = document.getElementById('find-solution'); /* Find the solution button */
 const choosenMethod = document.getElementById('methods'); /* Dropdown menu for method selection */
-const sonelement = document.getElementById('son');
+const sonelement = document.getElementById('son'); /* Container for Array B's inputs */
+const myboard = document.getElementById('board'); /* Textarea in which the answer will be displayed */
 
 
 createMatrixButton.addEventListener('click', createMatrix);
@@ -63,17 +64,19 @@ function makeInputsReady() {
         case 'gauss-seidel':
             for(let h=0; h<25; h++){
                 matrixX = GaussSeidel(matrixA, matrixB, matrixX);
-                /*console.log('res: ', matrixX);*/
             }
             break;
         case 'gauss-jacobi':
-            alert('Jacobi is choosen')
+            for(let h=0; h<25; h++){
+                matrixX = GaussJacobi(matrixA, matrixB, matrixX);
+            }
             break;
     }
 }
 
+/* ========== Gauss Seidel --------------------------------> Completed! ===============*/
 function GaussSeidel(matrixAnow, matrixBnow, matrixXnow) {
-    let aa = matrixAnow.length;
+    
     for (let a = 0; a < matheight.value; a++) {
         let d = matrixBnow[a];
         for (let b = 0; b < matheight.value; b++) {
@@ -84,6 +87,63 @@ function GaussSeidel(matrixAnow, matrixBnow, matrixXnow) {
         matrixXnow[a] = d/matrixAnow[a][a];
     }
 
-    console.log(matrixXnow);
+    let textnow = '';
+    matrixXnow.map((element)=>(textnow += element + ' | '));
+    myboard.value += textnow + '\r\n';
+
     return matrixXnow;
+}
+/* =====================================================================================*/
+
+/*========== Gauss Jacobi ------------------------------------> Completed! =============*/
+function GaussJacobi(matrixAnow, matrixBnow, matrixXnow){
+    let newX = matrixXnow;
+
+    for(let i=0; i < matheight.value; i++){
+        let d = matrixBnow[i];
+        for(let j=0; j < matheight.value; j++){
+            if(i != j){
+                d -= matrixAnow[i][j] * newX[j];
+            }
+        }
+
+        matrixXnow[i] = d / matrixAnow[i][i];
+        matrixXnow[i] = parseFloat(matrixXnow[i].toFixed(10));
+    }
+
+    let textnow = '';
+    matrixXnow.map((element)=>(textnow += element + ' | '));
+    myboard.value += textnow + '\r\n';
+
+    return matrixXnow;
+}
+/* ======================================================================================*/
+
+function GaussJordan(matrixAnow, matrixBnow, matrixXnow){
+
+    /******** Printing Function ************************/
+    function PrintMatrix(a, n){
+        let matrixWillBePrinted = '';
+
+        for(let i=0; i<n; i++){
+            for(let j=0; j<n; j++){
+                matrixWillBePrinted += a[i][j] + ' ';
+                matrixWillBePrinted += '<br>';
+            }
+        }
+    }
+    /***************************************************/
+
+    function PerformOperation(a, n){     
+        let i=0; let j=0; let k=0; let c=0; let flag=0; let m=0; let pro=0;
+        
+        for(i=0; i<n; i++){
+            if(a[i][i] == 0){
+                c=1;
+                while((i+c) < n && a[i+c][i] == 0){
+                    c++;
+                }
+            }
+        }
+    }
 }
