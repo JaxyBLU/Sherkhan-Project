@@ -141,9 +141,71 @@ function GaussJordan(matrixAnow, matrixBnow, matrixXnow){
             if(a[i][i] == 0){
                 c=1;
                 while((i+c) < n && a[i+c][i] == 0){
-                    c++;
+                    c++; /* Not sure if while block must be close here */
+                }
+                if((i+c) == n){
+                    flag = 1;
+                    break;
+                }
+                for(j=0, k=0; k<=n; k++){
+                    let temp = a[j][k];
+                    a[j][k] = a[j+c][k];
+                    a[j+c][k] = temp;
+                }
+            }
+            
+            for(j=0; j<n; j++){
+                // Excluding all i==j
+                if(i != j){
+                    // Converting the matrix to reduced row echelon form (diagonal matrix)
+                    let p = a[j][i] / a[i][i];
+                    for(k=0; k<=n; k++){
+                        a[j][k] = a[j][k] - (a[i][k]) * p;
+                    }
                 }
             }
         }
+
+        for(let i=0; i<n; i++){
+            a[i][n] /= a[i][i];
+            a[i][i] /= a[i][i];
+        }
+        return flag;
+    }
+
+    /* Function to print the desired result if unique soltion exists, otherwise prints
+    no solution or infinite solutions depending upon the input given. */
+    function PrintResult(a, n, flag){
+        let message = '';
+        message += 'The Result is: \r\n';
+
+        if(flag == 2){
+            message += 'Infinite Soltions exists \r\n';
+        } else
+        if(flag == 3){
+            message += 'No solution exists \r\n';
+        } else{
+            /* Printing the solution by dividing constants by their respective diagonal elements  */
+            for(let i=0; i<n; i++){
+                message += a[i][n] + ' ';
+            }
+        }
+    }
+
+    /* To check whether infinite solutions exists or no solution exists */
+    function CheckConsistency(a, n, flag){
+        let i; let j; let sum;
+        /* flag == 2 for infinite solution */
+        /* flag == 3 for no solution */
+        flag = 3;
+        for(i=0; i<n; i++){
+            sum = 0;
+            for(j=0; j<n; j++){
+                sum = sum + a[i][j];
+            }
+            if(sum == a[i][j]){flag = 2;} /* Not sure here also if this statement should be inside for loop up */
+        }
+        
+        return flag;
     }
 }
