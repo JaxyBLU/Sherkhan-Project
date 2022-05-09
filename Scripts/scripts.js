@@ -60,16 +60,19 @@ function makeInputsReady() {
     /* Call corresponding solution method function */
     switch (choosenMethod.value) {
         case 'gauss-jordan':
+            myboard.value += '==========================================================================\r\n';
             mainMessage = '';
             GaussJordan(matrixA, matrixB);
-            myboard.value = mainMessage;
+            myboard.value += mainMessage;
             break;
         case 'gauss-seidel':
+            myboard.value += '==========================================================================\r\n';
             for(let h=0; h<25; h++){
                 matrixX = GaussSeidel(matrixA, matrixB, matrixX);
             }
             break;
         case 'gauss-jacobi':
+            myboard.value += '==========================================================================\r\n';
             for(let h=0; h<25; h++){
                 matrixX = GaussJacobi(matrixA, matrixB, matrixX);
             }
