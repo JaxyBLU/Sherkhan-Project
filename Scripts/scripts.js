@@ -6,6 +6,7 @@ const solutionButton = document.getElementById('find-solution'); /* Find the sol
 const choosenMethod = document.getElementById('methods'); /* Dropdown menu for method selection */
 const sonelement = document.getElementById('son'); /* Container for Array B's inputs */
 const myboard = document.getElementById('board'); /* Textarea in which the answer will be displayed */
+let mainMessage = ''; /* Just a string data used in Gauss Jordan method */
 
 
 createMatrixButton.addEventListener('click', createMatrix);
@@ -59,14 +60,19 @@ function makeInputsReady() {
     /* Call corresponding solution method function */
     switch (choosenMethod.value) {
         case 'gauss-jordan':
-            alert('Jordan is choosen');
+            myboard.value = '';
+            mainMessage = '';
+            GaussJordan(matrixA, matrixB);
+            myboard.value = mainMessage;
             break;
         case 'gauss-seidel':
+            myboard.value = '';
             for(let h=0; h<25; h++){
                 matrixX = GaussSeidel(matrixA, matrixB, matrixX);
             }
             break;
         case 'gauss-jacobi':
+            myboard.value = '';
             for(let h=0; h<25; h++){
                 matrixX = GaussJacobi(matrixA, matrixB, matrixX);
             }
@@ -119,93 +125,99 @@ function GaussJacobi(matrixAnow, matrixBnow, matrixXnow){
 }
 /* ======================================================================================*/
 
-function GaussJordan(matrixAnow, matrixBnow, matrixXnow){
-
-    /******** Printing Function ************************/
-    function PrintMatrix(a, n){
-        let matrixWillBePrinted = '';
-
-        for(let i=0; i<n; i++){
-            for(let j=0; j<n; j++){
-                matrixWillBePrinted += a[i][j] + ' ';
-                matrixWillBePrinted += '<br>';
-            }
+/*========= Gauss Jordan -------------------------------------> Working on it ===========*/
+function GaussJordan(matrixAnow, matrixBnow){
+    //let M = 10;
+    function PrintMatrix(a,n){
+        for (let i = 0; i < n; i++){
+            for (let j = 0; j <= n; j++)
+                mainMessage += (' || ' + a[i][j] + ' || ');
+            mainMessage += '\r\n';
         }
     }
-    /***************************************************/
-
-    function PerformOperation(a, n){     
-        let i=0; let j=0; let k=0; let c=0; let flag=0; let m=0; let pro=0;
-        
-        for(i=0; i<n; i++){
-            if(a[i][i] == 0){
-                c=1;
-                while((i+c) < n && a[i+c][i] == 0){
-                    c++; /* Not sure if while block must be close here */
-                }
-                if((i+c) == n){
+    
+    function PerformOperation(a,n){
+        let i, j, k = 0, c, flag = 0, m = 0;
+        let pro = 0;
+            
+        for (i = 0; i < n; i++){
+            if (a[i][i] == 0){
+                c = 1;
+                while ((i + c) < n && a[i + c][i] == 0)
+                    c++;        
+                if ((i + c) == n){
                     flag = 1;
                     break;
                 }
-                for(j=0, k=0; k<=n; k++){
-                    let temp = a[j][k];
+                for (j = i, k = 0; k <= n; k++){
+                    let temp =a[j][k];
                     a[j][k] = a[j+c][k];
                     a[j+c][k] = temp;
                 }
             }
-            
-            for(j=0; j<n; j++){
-                // Excluding all i==j
-                if(i != j){
-                    // Converting the matrix to reduced row echelon form (diagonal matrix)
+        
+            for (j = 0; j < n; j++){
+                if (i != j){
                     let p = a[j][i] / a[i][i];
-                    for(k=0; k<=n; k++){
-                        a[j][k] = a[j][k] - (a[i][k]) * p;
-                    }
+                    for (k = 0; k <= n; k++)                
+                        a[j][k] = a[j][k] - (a[i][k]) * p;            
                 }
             }
         }
-
-        for(let i=0; i<n; i++){
-            a[i][n] /= a[i][i];
-            a[i][i] /= a[i][i];
-        }
         return flag;
     }
-
-    /* Function to print the desired result if unique soltion exists, otherwise prints
-    no solution or infinite solutions depending upon the input given. */
-    function PrintResult(a, n, flag){
-        let message = '';
-        message += 'The Result is: \r\n';
-
-        if(flag == 2){
-            message += 'Infinite Soltions exists \r\n';
-        } else
-        if(flag == 3){
-            message += 'No solution exists \r\n';
-        } else{
-            /* Printing the solution by dividing constants by their respective diagonal elements  */
-            for(let i=0; i<n; i++){
-                message += a[i][n] + ' ';
-            }
+    
+    /* Function to print the desired result if unique solutions exists,
+    otherwise prints no solution or infinite solutions depending upon the input given.*/
+    function PrintResult(a,n,flag){
+        mainMessage += ('Result is : \r\n');
+        if (flag == 2) mainMessage += ('Infinite Solutions Exists \r\n');
+        else if (flag == 3) mainMessage += ('No Solution Exists \r\n');
+        // Printing the solution by dividing constants by their respective diagonal elements
+        else {
+            for (let i = 0; i < n; i++)        
+                mainMessage += (a[i][n] / a[i][i] + ' || ');    
         }
     }
-
-    /* To check whether infinite solutions exists or no solution exists */
-    function CheckConsistency(a, n, flag){
-        let i; let j; let sum;
-        /* flag == 2 for infinite solution */
-        /* flag == 3 for no solution */
+    
+    // To check whether infinite solutions exists or no solution exists
+    function CheckConsistency(a,n,flag){
+        let i, j;
+        let sum;
+        // flag == 2 for infinite solution
+        // flag == 3 for No solution
         flag = 3;
-        for(i=0; i<n; i++){
+        for (i = 0; i < n; i++){
             sum = 0;
-            for(j=0; j<n; j++){
+            for (j = 0; j < n; j++)    
                 sum = sum + a[i][j];
-            }
-            if(sum == a[i][j]){flag = 2;} /* Not sure here also if this statement should be inside for loop up */
+            if (sum == a[i][j])
+                flag = 2;    
         }
-        
         return flag;
     }
+    
+    // Driver code
+    let a = new Array(matheight);
+    /* To create augmented matrix */
+    for(let i=0; i<matheight.value; i++){
+        a[i] = new Array(matwidth);
+        for(let j=0; j<matheight.value; j++){
+            a[i][j] = matrixAnow[i][j];
+        }
+        a[i][matheight.value] = matrixBnow[i];
+    }
+    // Order of Matrix(n)
+    let n = matheight.value, flag = 0;
+    // Performing Matrix transformation
+    flag = PerformOperation(a, n);
+    if (flag == 1) flag = CheckConsistency(a, n, flag); 
+
+    // Printing Final Matrix
+    mainMessage += ('Final Augmented Matrix is : \r\n');
+    PrintMatrix(a, n);
+    mainMessage += ('\r\n');
+    
+    // Printing Solutions(if exist)
+    PrintResult(a, n, flag);
 }
